@@ -27,10 +27,10 @@ jobs:
           cache-dependency-path: "starter/frontend/package-lock.json"
 
       - name: Install dependencies
-        run: cd frontend && npm ci
+        run: cd starter/frontend && npm ci
 
       - name: Run linter
-        run: cd frontend && npm run lint
+        run: cd starter/frontend && npm run lint
   test:
     runs-on: ubuntu-latest
     steps:
