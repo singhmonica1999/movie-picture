@@ -27,10 +27,10 @@ jobs:
           cache-dependency-path: "${{ env.SRC_DIR}}/package-lock.json"
 
       - name: Install dependencies
-        run: cd ${{env.SRC_DIR}} && npm ci
+        run: cd frontend && npm ci
 
       - name: Run linter
-        run: cd ${{env.SRC_DIR}} && npm run lint
+        run: cd frontend && npm run lint
   test:
     runs-on: ubuntu-latest
     steps:
@@ -45,10 +45,10 @@ jobs:
           cache-dependency-path: "${{ env.SRC_DIR}}/package-lock.json"
 
       - name: Install dependencies
-        run: cd ${{env.SRC_DIR}} && npm ci
+        run: cd frontend && npm ci
 
       - name: Build
-        run: cd ${{env.SRC_DIR}} && npm test
+        run: cd frontend && npm test
 
   build:
     needs: [lint, test]
@@ -74,5 +74,5 @@ jobs:
           REPOSITORY: frontend
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          cd ${{env.SRC_DIR}}
+          cd frontend
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
