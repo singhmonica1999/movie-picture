@@ -7,9 +7,7 @@ on:
       - main
 
 env:
-  NODE_VERSION: "16.x"
-  # SRC_DIR - path to the frontend root src folder
-  SRC_DIR: "${{ github.workspace }}/src/frontend/"
+  NODE_VERSION: "16.9.0"
   AWS_REGION: "us-east-1"
 
 jobs:
