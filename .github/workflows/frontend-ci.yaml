@@ -45,10 +45,10 @@ jobs:
           cache-dependency-path: "starter/frontend/package-lock.json"
 
       - name: Install dependencies
-        run: cd frontend && npm ci
+        run: cd starter/frontend && npm ci
 
       - name: Build
-        run: cd frontend && npm test
+        run: cd starter/frontend && npm test
 
   build:
     needs: [lint, test]
@@ -74,5 +74,5 @@ jobs:
           REPOSITORY: frontend
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          cd frontend
+          cd starter/frontend
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
