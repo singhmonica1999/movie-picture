@@ -8,8 +8,6 @@ on:
 
 env:
   PYTHON_VERSION: "3.10"
-  # SRC_DIR - path to the backend root src folder
-  SRC_DIR: "${{ github.workspace }}/src/backend/"
   AWS_REGION: "us-east-1"
 
 jobs:
@@ -29,9 +27,9 @@ jobs:
         run: pip install pipenv
 
       - name: Install dependencies
-        run: cd ${{env.SRC_DIR}} && pipenv install --dev
+        run: cd starter/backend && pipenv install --dev
       - name: Run linter
-        run: cd ${{env.SRC_DIR}} && pipenv run lint
+        run: cd starter/backend && pipenv run lint
   test:
     runs-on: ubuntu-latest
     steps:
@@ -48,10 +46,10 @@ jobs:
         run: pip install pipenv
 
       - name: Install dependencies
-        run: cd ${{env.SRC_DIR}} && pipenv install --dev
+        run: cd starter/backend && pipenv install --dev
 
       - name: Run linter
-        run: cd ${{env.SRC_DIR}} && pipenv run test
+        run: cd starter/backend && pipenv run test
 
   build:
     needs: [lint, test]
@@ -70,9 +68,9 @@ jobs:
         run: pip install pipenv
 
       - name: Install dependencies
-        run: cd ${{env.SRC_DIR}} && pipenv install --dev
+        run: cd starter/backend && pipenv install --dev
       - name: Run linter
-        run: cd ${{env.SRC_DIR}} && pipenv run test
+        run: cd starter/backend && pipenv run test
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -91,5 +89,5 @@ jobs:
           REPOSITORY: backend
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          cd ${{env.SRC_DIR}}
+          cd starter/backend
           docker build --tag=$REGISTRY/$REPOSITORY:$IMAGE_TAG .
