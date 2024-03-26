@@ -7,9 +7,7 @@ on:
       - main
 
 env:
-  NODE_VERSION: "latest"
-  # SRC_DIR - path to the frontend root src folder
-  SRC_DIR: "${{ github.workspace }}/src/frontend/"
+  NODE_VERSION: "16.9.0"
   AWS_REGION: "us-east-1"
 
 jobs:
@@ -24,13 +22,13 @@ jobs:
         with:
           node-version: ${{env.NODE_VERSION}}
           cache: "npm"
-          cache-dependency-path: "${{ env.SRC_DIR}}/package-lock.json"
+          cache-dependency-path: "starter/frontend/package-lock.json"
 
       - name: Install dependencies
-        run: cd ${{env.SRC_DIR}} && npm ci
+        run: cd starter/frontend && npm ci
 
       - name: Run linter
-        run: cd ${{env.SRC_DIR}} && npm run lint
+        run: cd starter/frontend && npm run lint
   test:
     runs-on: ubuntu-latest
     steps:
@@ -42,13 +40,13 @@ jobs:
         with:
           node-version: ${{env.NODE_VERSION}}
           cache: "npm"
-          cache-dependency-path: "${{ env.SRC_DIR}}/package-lock.json"
+          cache-dependency-path: "starter/frontend/package-lock.json"
 
       - name: Install dependencies
-        run: cd ${{env.SRC_DIR}} && npm ci
+        run: cd starter/frontend && npm ci
 
       - name: Build
-        run: cd ${{env.SRC_DIR}} && npm test
+        run: cd starter/frontend && npm test
 
   build:
     needs: [lint, test]
@@ -74,5 +72,5 @@ jobs:
           REPOSITORY: frontend
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          cd ${{env.SRC_DIR}}
+          cd starter/frontend
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
